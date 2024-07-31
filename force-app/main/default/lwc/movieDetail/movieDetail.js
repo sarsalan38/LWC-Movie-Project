@@ -37,8 +37,6 @@ export default class MovieDetail extends LightningElement {
     handleMessage(message) {
         let selectedMovieId = message.movieId;
         let APIKEY = message.apiKey
-        console.log(`Subscribed : ${selectedMovieId}`);
-        console.log(`Subscribed : ${APIKEY}`);
         this.fetchMovieDetails(selectedMovieId, APIKEY);
     }
   
@@ -47,17 +45,15 @@ export default class MovieDetail extends LightningElement {
     }
 
     async fetchMovieDetails(movieId, APIKEY) {
-        this.loadComponent = false;
         let url = `https://www.omdbapi.com/?i=${movieId}&plot=full&apikey=${APIKEY}`;
-        await fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                this.movieDetails = data;
-                this.loadComponent = true;
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            this.movieDetails = data;
+        } catch (error) {
+            console.error('Fetch error:', error);
+        } finally {
+            this.loadComponent = true;
+        }
     }
 }
