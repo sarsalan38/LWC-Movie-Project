@@ -20,6 +20,19 @@
             </div>
         </div>
     </lightning-card>
+    <template if:true={loading}>
+        <lightning-card class="slds-var-m-around_small slds-var-p-left_xx-large">
+                <div class="loader">
+                    <div class="wrapper">
+                        <div class="circle"></div>
+                        <div class="line-1"></div>
+                        <div class="line-2"></div>
+                        <div class="line-3"></div>
+                        <div class="line-4"></div>
+                    </div>
+                </div>
+        </lightning-card>
+    </template>
     <template if:true={noMovieFound}>
         <lightning-card class="slds-var-m-around_small slds-text-align_center">
             <h3><b>No Movie Found</b></h3>

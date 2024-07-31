@@ -31,60 +31,54 @@ export default class MovieSearch extends LightningElement {
 
     handleChange(event) {
         this.searchResult = [];
-        // this.selectedSearch = "";
-        // this.selectedType = ""
         let { name, value } = event.target;
-        if (name === "type") {
+    
+        if (name === 'type') {
             this.selectedType = value;
-        } else if (name === "search") {
+        } else if (name === 'search') {
             this.selectedSearch = value;
-            if (value !== "") {
+            if (value !== '') {
                 this.loading = true;
             }
-        } else if (name === "pageno") {
+        } else if (name === 'pageno') {
             this.selectedPageNo = value;
         }
-
+    
         this.noMovieFound = false;
         
-        if (this.selectedSearch !== "" && this.selectedSearch !== null) {
-            console.log("Selected Search : " + this.selectedSearch);
+        if (this.selectedSearch !== '' && this.selectedSearch !== null) {
             clearTimeout(this.delayTimeout);
             this.delayTimeout = setTimeout(() => {
                 this.searchMovie();
             }, DELAY);
-        } else {
+        }
+    }
+    
+    async searchMovie() {
+        let url = `https://www.omdbapi.com/?s=${this.selectedSearch}&type=${this.selectedType}&page=${this.selectedPageNo}&apikey=${APIKEY}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            this.searchResult = data.Search || [];
+            this.noMovieFound = data.Error ? true : false;
+        } catch (error) {
+            console.error('Fetch error:', error);
+        } finally {
+            this.loading = false;
         }
     }
 
-    async searchMovie() {
-        this.loading = false;
-        this.noMovieFound = false;
-        let url = `https://www.omdbapi.com/?s=${this.selectedSearch}&type=${this.selectedType}&page=${this.selectedPageNo}&apikey=${APIKEY}`;
-        await fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                this.searchResult = data.Search ? data.Search : [];
-                if (data.Error) {
-                    this.noMovieFound = true;
-                }
-                console.log(this.noMovieFound);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
     get displaySearchResults() {
-        return this.searchResult.length > 0 ? true : false;
+        return this.searchResult.length > 0;
     }
 
     movieSelected(event) {
-        this.searchMovie = event.detail;
-        console.log(`Parent Component : ${this.searchMovie}`);
+        this.selectedMovie = event.detail;
+        console.log(`Parent Component : ${this.selectedMovie}`);
 
-        const payload = { movieId: this.searchMovie, apiKey: APIKEY };
+        const payload = { movieId: this.selectedMovie, apiKey: APIKEY };
         publish(this.messageContext, RECORDSELECTED, payload);
+
+        document.documentElement.scrollTop = 0;
       }
 }
