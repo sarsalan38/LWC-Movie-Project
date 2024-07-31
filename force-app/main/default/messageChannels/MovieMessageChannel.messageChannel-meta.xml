@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="https://soap.sforce.com/2006/04/metadata">
+   <masterLabel>MyMessageChannel</masterLabel>
+   <isExposed>true</isExposed>
+   <description>This Lightning Message Channel sends movieId to movieDetails compenent</description>
+
+   <lightningMessageFields>
+       <fieldName>movieId</fieldName>
+       <description>Contains Id of the movie clicked</description>
+   </lightningMessageFields>
+
+   <lightningMessageFields>
+    <fieldName>apiKey</fieldName>
+    <description>API Key of OMDB</description>
+</lightningMessageFields>
+
+</LightningMessageChannel>

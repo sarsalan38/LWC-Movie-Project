@@ -1,0 +1,31 @@
+.movie-poster img {
+    max-width: 170px;
+    border-radius: 5px;
+}
+
+.movie-title{
+    font-size: x-large;
+    color: rgb(215, 179, 86);
+    text-align: center;
+    font-weight: bold;
+}
+
+.movie-info{
+    text-align: left;
+    color: black;
+    margin-top: 10px;
+}
+
+.plot{
+    max-width: 400px;
+    margin-left: 0;
+}
+
+b{
+    color: goldenrod;
+    font-style: italic;
+}
+
+p{
+    font-size: inherit;
+}

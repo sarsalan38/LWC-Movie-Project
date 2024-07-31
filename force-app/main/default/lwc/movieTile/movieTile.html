@@ -1,0 +1,12 @@
+<template>
+    <div class="movie-card-container slds-scrollable_y">
+        <template for:each={movies} for:item="movie">
+            <div key={movie.imdbID} class="movie-card" data-id={movie.imdbID} onclick={handleCardClick}>
+                <img src={movie.Poster} alt="No image found" class="movie-image"/>
+                <div class="movie-overlay">
+                    <p class="movie-name">{movie.Title}</p>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>
