@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title="Movie Search">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-m-left_medium">
+                <lightning-combobox name="type" label="Type" value={selectedType} placeholder="Select Type"
+                    options={typeOptions} onchange={handleChange}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-input name="search" type="search" label="Search" placeholder="Search for Movies/Series"
+                    onchange={handleChange} is-loading={loading}>
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-m-right_medium">
+                <lightning-input type="number" name="pageno" label="Page" onchange={handleChange} value={selectedPageNo}
+                    placeholder="Enter Page" field-level-help="Range 1-100" min="1" max="100"
+                    message-when-range-underflow="Minimum value is 1"
+                    message-when-range-overflow="Maximum value is 100">
+                </lightning-input>
+            </div>
+        </div>
+    </lightning-card>
+    <template if:true={noMovieFound}>
+        <lightning-card class="slds-var-m-around_small slds-text-align_center">
+            <h3><b>No Movie Found</b></h3>
+        </lightning-card>
+    </template>
+    <template lwc:if={displaySearchResults}>
+        <lightning-card class="slds-var-m-around_small" title="Movie Found">
+            <c-movie-tile movies={searchResult} oncardclicked={movieSelected}></c-movie-tile>
+        </lightning-card>
+    </template>
+</template>
